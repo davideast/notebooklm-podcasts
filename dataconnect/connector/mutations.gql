@@ -1,0 +1,61 @@
+# Mutations
+# Update episode interaction
+mutation UpdateEpisodeInteraction(
+  $episodeId: UUID!,
+  $isLiked: Boolean,
+  $isFavorite: Boolean,
+  $playbackPosition: Int,
+  $isCompleted: Boolean,
+  $addedToLibrary: Boolean
+) @auth(level: USER) {
+  userEpisodeInteraction_upsert(data: {
+    user: { auth_expr: "auth.uid" }
+    episode: { id: $episodeId }
+    isLiked: $isLiked
+    isFavorite: $isFavorite
+    playbackPosition: $playbackPosition
+    isCompleted: $isCompleted
+    addedToLibrary: $addedToLibrary
+    lastPlayedAt_expr: "request.time"
+  })
+}
+
+# Create new playlist
+mutation CreatePlaylist($title: String!, $description: String, $isPublic: Boolean!) 
+@auth(level: USER) {
+  playlist_insert(data: {
+    user: { auth_expr: "auth.uid" }
+    title: $title
+    description: $description
+    isPublic: $isPublic
+  })
+}
+
+# Add episode to playlist
+mutation AddEpisodeToPlaylist(
+  $playlistId: UUID!, 
+  $episodeId: UUID!, 
+  $position: Int!
+) @auth(level: USER) {
+  playlistEpisode_insert(data: {
+    playlistId: $playlistId
+    episodeId: $episodeId
+    position: $position
+  })
+}
+
+# Remove episode from playlist
+mutation RemoveEpisodeFromPlaylist($playlistId: UUID!, $episodeId: UUID!) 
+@auth(level: USER) {
+  playlistEpisode_delete(
+    key: {
+      playlistId: $playlistId,
+      episodeId: $episodeId
+    }
+  )
+}
+
+# Delete playlist
+mutation DeletePlaylist($playlistId: UUID!) @auth(level: USER) {
+  playlist_delete(id: $playlistId)
+}

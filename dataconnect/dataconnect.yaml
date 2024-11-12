@@ -1,0 +1,11 @@
+specVersion: "v1alpha"
+serviceId: "podcast-service"
+location: "us-east4"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "podcast-db"
+      cloudSql:
+        instanceId: "podcast-instance"
+connectorDirs: ["./connector"]

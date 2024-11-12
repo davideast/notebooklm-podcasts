@@ -1,0 +1,7 @@
+connectorId: connector
+authMode: PUBLIC
+generate:
+  javascriptSdk:
+    package: "@davideast/podcast"
+    outputDir: ../../app/src/lib/podcast-sdk
+    packageJsonDir: "../../app"

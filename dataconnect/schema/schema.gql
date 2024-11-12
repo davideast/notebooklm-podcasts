@@ -1,0 +1,53 @@
+# User table linked to Firebase Auth
+type User @table(key: "auth") {
+  auth: String! @default(expr: "auth.uid")
+  username: String
+  email: String
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
+# Individual episodes in the discovery feed
+type Episode @table {
+  id: UUID! @default(expr: "uuidV4()")
+  title: String!
+  description: String
+  author: String
+  imageUrl: String
+  duration: Int! # Duration in seconds
+  audioUrl: String!
+  category: String
+  tags: [String] # Array of tags for better discovery
+  publishedAt: Timestamp! @default(expr: "request.time")
+}
+
+# User's interaction with episodes
+type UserEpisodeInteraction @table(key: ["user", "episode"]) {
+  user: User! @ref
+  episode: Episode! @ref
+  isLiked: Boolean
+  isFavorite: Boolean
+  isDisliked: Boolean
+  playbackPosition: Int # Position in seconds
+  isCompleted: Boolean
+  lastPlayedAt: Timestamp
+  addedToLibrary: Boolean # Flag for user's personal library
+}
+
+# User's playlists
+type Playlist @table {
+  id: UUID! @default(expr: "uuidV4()")
+  user: User! @ref
+  title: String!
+  description: String
+  isPublic: Boolean! @default(value: false)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+# Episodes in playlists
+type PlaylistEpisode @table(key: ["playlist", "episode"]) {
+  playlist: Playlist! @ref
+  episode: Episode! @ref
+  addedAt: Timestamp! @default(expr: "request.time")
+  position: Int! # Order in playlist
+}

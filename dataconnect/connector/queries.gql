@@ -1,0 +1,94 @@
+# Queries
+# Get discovery feed with optional filters
+query GetDiscoveryFeed(
+  $category: String,
+  $searchQuery: String,
+  $limit: Int = 20,
+  $offset: Int = 0
+) @auth(level: USER) {
+  episodes(
+    where: {
+      _and: [
+        { category: { eq: $category } },
+        { 
+          _or: [
+            { title: { contains: $searchQuery } },
+            { description: { contains: $searchQuery } }
+          ]
+        }
+      ]
+    }
+    orderBy: [{ publishedAt: DESC }]
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+    title
+    description
+    author
+    imageUrl
+    duration
+    category
+    tags
+    publishedAt
+  }
+}
+
+# Get user's library (favorited/added episodes)
+query GetUserLibrary @auth(level: USER) {
+  userEpisodeInteractions(
+    where: { 
+      user: { auth: { eq_expr: "auth.uid" } },
+      addedToLibrary: { eq: true }
+    }
+  ) {
+    episode {
+      id
+      title
+      author
+      imageUrl
+      duration
+      category
+    }
+    isLiked
+    isFavorite
+    playbackPosition
+    lastPlayedAt
+  }
+}
+
+# Get user's playlists
+query GetUserPlaylists @auth(level: USER) {
+  playlists(
+    where: { user: { auth: { eq_expr: "auth.uid" } } }
+  ) {
+    id
+    title
+    description
+    isPublic
+    createdAt
+  }
+}
+
+# Get single playlist
+query GetPlaylist($playlistId: UUID!) @auth(level: USER) {
+  playlist(id: $playlistId) {
+    title
+    description
+    isPublic
+    user {
+      username
+    }
+    playlistEpisodes_on_playlist(orderBy: [{position: ASC}]) {
+      episode {
+        id
+        title
+        author
+        duration
+        imageUrl
+      }
+      position
+      addedAt
+    }
+  }
+}
