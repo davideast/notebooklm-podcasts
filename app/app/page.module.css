@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: minmax(1rem, 1fr) minmax(auto, 70ch) minmax(1rem, 1fr);
   place-items: center;
-  gap: 40px;
+  gap: 40px 0;
 
   & > * {
     grid-column: 2;
@@ -33,3 +33,155 @@
     max-inline-size: 22ch;
   }
 }
+
+
+
+.container {
+  max-width: 64rem;
+  background: white;
+  border-radius: 0.5rem;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  color: var(--fg);
+  gap: 14px;
+}
+
+.content {
+  display: flex;
+  gap: 40px;
+}
+
+.description {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.authorName {
+  font-family: var(--font-plus-jakarta);
+  font-weight: 500;
+  font-size: var(--text-sm);
+}
+
+.date {
+  color: var(--fg);
+  font-family: var(--font-plus-jakarta);
+  font-size: var(--text-sm);
+}
+
+.title {
+  font-family: var(--font-plus-jakarta);
+  font-size: var(--text);
+  color: var(--fg);
+}
+
+.description {
+  font-family: var(--font-plus-jakarta);
+  color: var(--text-color);
+  line-height: 1.5;
+  font-size: clamp(var(--text-xs), 2vw + 0.5rem, var(--text-sm));
+}
+
+.metrics {
+  display: flex;
+  align-items: center;
+  gap: 0 clamp(8px, 2vw + 1rem, 32px);
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg);
+  font-family: var(--font-plus-jakarta);
+  font-size: var(--text-xs);
+}
+
+.playMetric {
+  composes: metric;
+  gap: 6px;
+  border: 1px solid hsla(0, 0%, 0%, 20%);
+  border-radius: 16px;
+  padding: 4px 8px;
+}
+
+.upvoteMetric {
+  composes: metric;
+  font-size: var(--text-sm);
+  font-weight: bold;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.statusIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background-color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.statusIcon.listened {
+  background-color: #22c55e;
+}
+
+.checkIcon {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: white;
+}
+
+.imageWrapper {
+  width: 72px;
+  height: 72px;
+}
+
+.imageWrapper img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+/* Hover effects */
+.metric:hover {
+  color: var(--fg);
+  cursor: pointer;
+}
+
+/* @container (max-width: 640px) {
+
+} */

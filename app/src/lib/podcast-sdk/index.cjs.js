@@ -7,6 +7,62 @@ const connectorConfig = {
 };
 exports.connectorConfig = connectorConfig;
 
+function getDiscoveryFeedRef(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
+  if('_useGeneratedSdk' in dcInstance) {
+    dcInstance._useGeneratedSdk();
+  } else {
+    console.error('Please update to the latest version of the Data Connect SDK by running `npm install firebase@dataconnect-preview`.');
+  }
+  return queryRef(dcInstance, 'GetDiscoveryFeed', inputVars);
+}
+exports.getDiscoveryFeedRef = getDiscoveryFeedRef;
+exports.getDiscoveryFeed = function getDiscoveryFeed(dcOrVars, vars) {
+  return executeQuery(getDiscoveryFeedRef(dcOrVars, vars));
+};
+
+function getUserLibraryRef(dc) {
+  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+  if('_useGeneratedSdk' in dcInstance) {
+    dcInstance._useGeneratedSdk();
+  } else {
+    console.error('Please update to the latest version of the Data Connect SDK by running `npm install firebase@dataconnect-preview`.');
+  }
+  return queryRef(dcInstance, 'GetUserLibrary');
+}
+exports.getUserLibraryRef = getUserLibraryRef;
+exports.getUserLibrary = function getUserLibrary(dc) {
+  return executeQuery(getUserLibraryRef(dc));
+};
+
+function getUserPlaylistsRef(dc) {
+  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+  if('_useGeneratedSdk' in dcInstance) {
+    dcInstance._useGeneratedSdk();
+  } else {
+    console.error('Please update to the latest version of the Data Connect SDK by running `npm install firebase@dataconnect-preview`.');
+  }
+  return queryRef(dcInstance, 'GetUserPlaylists');
+}
+exports.getUserPlaylistsRef = getUserPlaylistsRef;
+exports.getUserPlaylists = function getUserPlaylists(dc) {
+  return executeQuery(getUserPlaylistsRef(dc));
+};
+
+function getPlaylistRef(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  if('_useGeneratedSdk' in dcInstance) {
+    dcInstance._useGeneratedSdk();
+  } else {
+    console.error('Please update to the latest version of the Data Connect SDK by running `npm install firebase@dataconnect-preview`.');
+  }
+  return queryRef(dcInstance, 'GetPlaylist', inputVars);
+}
+exports.getPlaylistRef = getPlaylistRef;
+exports.getPlaylist = function getPlaylist(dcOrVars, vars) {
+  return executeQuery(getPlaylistRef(dcOrVars, vars));
+};
+
 function updateEpisodeInteractionRef(dcOrVars, vars) {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   if('_useGeneratedSdk' in dcInstance) {
@@ -75,61 +131,5 @@ function deletePlaylistRef(dcOrVars, vars) {
 exports.deletePlaylistRef = deletePlaylistRef;
 exports.deletePlaylist = function deletePlaylist(dcOrVars, vars) {
   return executeMutation(deletePlaylistRef(dcOrVars, vars));
-};
-
-function getDiscoveryFeedRef(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
-  if('_useGeneratedSdk' in dcInstance) {
-    dcInstance._useGeneratedSdk();
-  } else {
-    console.error('Please update to the latest version of the Data Connect SDK by running `npm install firebase@dataconnect-preview`.');
-  }
-  return queryRef(dcInstance, 'GetDiscoveryFeed', inputVars);
-}
-exports.getDiscoveryFeedRef = getDiscoveryFeedRef;
-exports.getDiscoveryFeed = function getDiscoveryFeed(dcOrVars, vars) {
-  return executeQuery(getDiscoveryFeedRef(dcOrVars, vars));
-};
-
-function getUserLibraryRef(dc) {
-  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
-  if('_useGeneratedSdk' in dcInstance) {
-    dcInstance._useGeneratedSdk();
-  } else {
-    console.error('Please update to the latest version of the Data Connect SDK by running `npm install firebase@dataconnect-preview`.');
-  }
-  return queryRef(dcInstance, 'GetUserLibrary');
-}
-exports.getUserLibraryRef = getUserLibraryRef;
-exports.getUserLibrary = function getUserLibrary(dc) {
-  return executeQuery(getUserLibraryRef(dc));
-};
-
-function getUserPlaylistsRef(dc) {
-  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
-  if('_useGeneratedSdk' in dcInstance) {
-    dcInstance._useGeneratedSdk();
-  } else {
-    console.error('Please update to the latest version of the Data Connect SDK by running `npm install firebase@dataconnect-preview`.');
-  }
-  return queryRef(dcInstance, 'GetUserPlaylists');
-}
-exports.getUserPlaylistsRef = getUserPlaylistsRef;
-exports.getUserPlaylists = function getUserPlaylists(dc) {
-  return executeQuery(getUserPlaylistsRef(dc));
-};
-
-function getPlaylistRef(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  if('_useGeneratedSdk' in dcInstance) {
-    dcInstance._useGeneratedSdk();
-  } else {
-    console.error('Please update to the latest version of the Data Connect SDK by running `npm install firebase@dataconnect-preview`.');
-  }
-  return queryRef(dcInstance, 'GetPlaylist', inputVars);
-}
-exports.getPlaylistRef = getPlaylistRef;
-exports.getPlaylist = function getPlaylist(dcOrVars, vars) {
-  return executeQuery(getPlaylistRef(dcOrVars, vars));
 };
 
